@@ -1,0 +1,16 @@
+node_modules/
+.next/
+build/
+dist/
+public/
+.gitignore
+next-env.d.ts
+next.config.mjs
+package-lock.json
+package.json
+postcss.config.mjs
+tailwind.config.js
+tsconfig.json
+docker-compose.yml
+.eslintrc.json
+.eslintignore

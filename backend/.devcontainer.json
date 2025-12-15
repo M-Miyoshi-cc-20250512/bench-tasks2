@@ -1,0 +1,22 @@
+{
+  //   "name": "Python Container",
+  //   "dockerFile": "./Dockerfile", // Dockerfileのパス
+  //   "context": "..", // プロジェクトのコンテキスト
+  "settings": {
+    "python.pythonPath": "/usr/local/bin/python3.12", // コンテナ内のPythonパス
+    "terminal.integrated.shell.linux": "/bin/bash"
+  }
+  //   "extensions": [
+  //     "ms-python.python", // Python拡張
+  //     "ms-python.vscode-pylance" // Pythonインテリセンス用
+  //   ],
+  //   "postCreateCommand": "pip install -r requirements.txt", // 必要に応じてパッケージをインストール
+  //   "remoteUser": "vscode", // ユーザーをvscodeに設定
+  //   "forwardPorts": [
+  //     8000 // 必要に応じてポートをフォワード
+  //   ],
+  //   "mounts": [
+  //     "source=${localWorkspaceFolder},target=/workspace,type=bind,consistency=cached"
+  //   ],
+  //   "workspaceFolder": "/workspace"
+}

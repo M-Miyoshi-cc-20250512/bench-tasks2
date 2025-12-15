@@ -1,0 +1,5 @@
+// {
+//   "python.analysis.extraPaths": ["/usr/local/bin/python"],
+//   "python.jediEnabled": true,
+//   "python.languageServer": "Jedi"
+// }
