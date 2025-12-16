@@ -1,10 +1,18 @@
 "use client";
 import { useState } from "react";
 import Head from "next/head";
+import axios from "axios";
 
 export default function Home() {
   const [text, setText] = useState("");
   const [tasks, setTasks] = useState<{ text: string; done: boolean }[]>([]);
+  const [apiMessage, setApiMessage] = useState("");
+
+  const getApiMessage = async () => {
+    const res = await axios.get("/api/sample/hello");
+    setApiMessage(res.data.message);
+  };
+
   const toggleDone = (index: number) => {
     const newTasks = [...tasks];
     newTasks[index].done = !newTasks[index].done;
@@ -24,6 +32,12 @@ export default function Home() {
 
       <main>
         <h1>TODO List</h1>
+
+        <button onClick={getApiMessage}>
+          API表示
+        </button>
+
+        <p>{apiMessage}</p>
 
         <input
           type="text"
