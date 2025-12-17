@@ -24,3 +24,18 @@ export async function DELETE(request: Request) {
         allTasks: tasks,
     });
 }
+
+export async function PUT(request: Request) {
+    const data = await request.json();
+
+    tasks = tasks.map(task =>
+        task.text === data.text
+            ? { ...task, done: data.done }
+            : task
+    );
+
+    return NextResponse.json({
+        message: "Task updated successfully",
+        allTasks: tasks,
+    });
+}
