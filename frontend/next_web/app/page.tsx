@@ -1,74 +1,59 @@
 "use client";
 
-import { useTodoStore } from "./_store/todoStore";
-import { useState } from "react";
+import { z } from "zod";
+import { zodResolver } from "@hookform/resolvers/zod";
 import Head from "next/head";
-import axios from "axios";
+import { useForm } from "react-hook-form";
+
+const contactSchema = z.object({
+  name: z.string().min(1, "Name is required"),
+  email: z.string().email("Invalid email address"),
+  message: z.string().min(1, "Message is required"),
+});
 
 export default function Home() {
-  // zustand から取る
-  const tasks = useTodoStore((state) => state.tasks);
-  const addTask = useTodoStore((state) => state.addTask);
-  const toggleTask = useTodoStore((state) => state.toggleTask);
-  const deleteTask = useTodoStore((state) => state.deleteTask);
+  const {
+    register,
+    handleSubmit,
+    formState: { errors },
+  } = useForm({
+    resolver: zodResolver(contactSchema),
+  });
 
-  // 入力欄と API 表示用だけ useState
-  const [text, setText] = useState("");
-  const [apiMessage, setApiMessage] = useState("");
-
-  const getApiMessage = async () => {
-    const res = await axios.get("/api/sample/hello");
-    setApiMessage(res.data.message);
+  const onSubmit = (data: any) => {
+    console.log(data);
   };
 
   return (
     <>
       <Head>
-        <title>TODO List</title>
+        <title>Contact Form</title>
       </Head>
 
       <main>
-        <h1>TODO List</h1>
+        <h1>Contact Form</h1>
 
-        <button onClick={getApiMessage}>API表示</button>
-        <p>{apiMessage}</p>
+        <form onSubmit={handleSubmit(onSubmit)} noValidate>
+          <div>
+            <label>Name</label><br />
+            <input type="text" {...register("name")} />
+            {errors.name && <p>{errors.name.message as string}</p>}
+          </div>
 
-        <input
-          type="text"
-          value={text}
-          onChange={(e) => setText(e.target.value)}
-        />
+          <div>
+            <label>Email</label><br />
+            <input type="email" {...register("email")} />
+            {errors.email && <p>{errors.email.message as string}</p>}
+          </div>
 
-        <button
-          onClick={() => {
-            addTask(text);
-            setText("");
-          }}
-        >
-          追加
-        </button>
+          <div>
+            <label>Message</label><br />
+            <textarea {...register("message")}></textarea>
+            {errors.message && <p>{errors.message.message as string}</p>}
+          </div>
 
-        <ul>
-          {tasks.map((task, index) => (
-            <li key={index}>
-              <span
-                style={{
-                  textDecoration: task.done ? "line-through" : "none",
-                }}
-              >
-                {task.text}
-              </span>
-
-              <input
-                type="checkbox"
-                checked={task.done}
-                onChange={() => toggleTask(index)}
-              />
-
-              <button onClick={() => deleteTask(index)}>削除</button>
-            </li>
-          ))}
-        </ul>
+          <button type="submit">Send</button>
+        </form>
       </main>
     </>
   );
