@@ -1,8 +1,14 @@
 from django.contrib import admin
-from .models import News
+from .models import News, TestItem
+
 
 class NewsAdmin(admin.ModelAdmin):
-    # 一覧表示に必要なフィールドを指定
-    list_display = ('title', 'published_at') 
-    
+    list_display = ('title', 'published_at')
+
+
+class TestItemAdmin(admin.ModelAdmin):
+    list_display = ('title', 'published_at')
+
+
 admin.site.register(News, NewsAdmin)
+admin.site.register(TestItem, TestItemAdmin)

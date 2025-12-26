@@ -14,3 +14,15 @@ class News(models.Model):
 
     def __str__(self):
         return self.title
+
+
+class TestItem(models.Model):
+    title = models.CharField('タイトル', max_length=255)
+    published_at = models.DateTimeField('日付', default=datetime.now)
+
+    class Meta:
+        verbose_name = "テスト項目"
+        verbose_name_plural = "テスト項目一覧"
+
+    def __str__(self):
+        return self.title
